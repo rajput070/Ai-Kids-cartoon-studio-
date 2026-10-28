@@ -1,115 +1,344 @@
 
-
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Kids Cartoon Studio</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #eaf7ff;
-      text-align: center;
-      padding: 20px;
-    }
-    .studio {
-      max-width: 600px;
-      margin: auto;
-      background: white;
-      padding: 20px;
-      border-radius: 16px;
-    }
-    textarea {
-      width: 95%;
-      height: 100px;
-      padding: 10px;
-      font-size: 16px;
-    }
-    button {
-      margin: 10px 5px;
-      padding: 12px 18px;
-      border: none;
-      border-radius: 10px;
-      background: #1677ff;
-      color: white;
-      font-size: 16px;
-    }
-    .scene {
-      background: #f1f8e9;
-      margin-top: 12px;
-      padding: 14px;
-      border-radius: 10px;
-      text-align: left;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Kids Cartoon Studio</title>
+<style>
+:root {
+  --bg:#0b1020; --panel:#141c31; --line:#283653;
+  --text:#f5f7ff; --muted:#aab6d0;
+  --purple:#9875ff; --cyan:#58e1e8;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0; background:radial-gradient(circle at top,#1b2850,var(--bg) 55%);
+  color:var(--text); font-family:system-ui,Arial,sans-serif;
+}
+button,textarea,input,select { font:inherit; }
+button {
+  border:0; border-radius:12px; padding:12px 16px;
+  background:linear-gradient(110deg,var(--purple),#6c8dff);
+  color:white; font-weight:700; cursor:pointer;
+}
+button.secondary { background:#263451; border:1px solid var(--line); }
+button:disabled { opacity:.5; cursor:not-allowed; }
+header {
+  padding:18px 5%; border-bottom:1px solid var(--line);
+  display:flex; justify-content:space-between; align-items:center; gap:12px;
+}
+.brand { font-weight:900; font-size:20px; }
+.brand span { color:var(--cyan); }
+.status { color:var(--cyan); font-size:12px; }
+main { max-width:1250px; margin:auto; padding:24px 16px 50px; }
+h1 { font-size:clamp(27px,5vw,43px); margin:8px 0; }
+p { color:var(--muted); line-height:1.6; }
+.layout { display:grid; grid-template-columns:340px 1fr; gap:18px; margin-top:24px; }
+.panel {
+  background:rgba(20,28,49,.94); border:1px solid var(--line);
+  border-radius:20px; padding:18px; min-width:0;
+}
+label { display:block; margin:14px 0 7px; font-weight:700; font-size:14px; }
+textarea, input, select {
+  width:100%; color:var(--text); background:#0b1327;
+  border:1px solid var(--line); border-radius:11px; padding:12px;
+}
+textarea { min-height:145px; resize:vertical; }
+.actions { display:flex; flex-wrap:wrap; gap:9px; margin-top:13px; }
+.actions button { flex:1; }
+.preview {
+  min-height:320px; border:1px solid var(--line); border-radius:16px;
+  overflow:hidden; position:relative; display:grid; place-items:center;
+  text-align:center; padding:24px;
+  background:
+   radial-gradient(ellipse at 50% 110%,#1f986d 0 22%,transparent 23%),
+   linear-gradient(#6cc8ef 0%,#b8e8ff 57%,#65bd7d 58%,#24734f 100%);
+  color:#142039;
+}
+.preview:before {
+  content:""; position:absolute; width:130px; height:130px;
+  border-radius:50%; background:#fff3a1; top:24px; right:35px;
+  box-shadow:0 0 50px #fff3a177;
+}
+.preview-content { position:relative; z-index:1; }
+.character { font-size:clamp(80px,15vw,145px); filter:drop-shadow(0 10px 6px #163e4a55); }
+.preview h2 { margin:0; }
+.preview p { color:#20374c; font-weight:600; }
+.section-title { display:flex; justify-content:space-between; gap:10px; align-items:center; }
+.scene-list { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-top:15px; }
+.scene {
+  border:1px solid var(--line); border-radius:14px; padding:13px;
+  background:#0e172b; cursor:pointer; min-width:0;
+}
+.scene.active { border-color:var(--cyan); box-shadow:0 0 0 1px var(--cyan); }
+.scene-art { min-height:100px; border-radius:10px; display:grid; place-items:center;
+  font-size:47px; background:linear-gradient(#7ed5f3,#d5f3e5 65%,#69b77a 66%); }
+.scene h3 { font-size:14px; margin:12px 0 5px; }
+.scene p { font-size:12px; margin:0; }
+.small { font-size:12px; }
+.timeline { height:7px; background:#293550; border-radius:20px; overflow:hidden; margin:12px 0; }
+.timeline div { height:100%; width:0; background:var(--cyan); transition:width .2s; }
+.notice { padding:12px; border-radius:12px; background:#101a30; border:1px solid var(--line); margin-top:14px; }
+#message { white-space:pre-wrap; font-size:13px; color:var(--cyan); }
+footer { text-align:center; padding:20px; color:var(--muted); font-size:12px; }
+@media(max-width:800px) {
+ .layout { grid-template-columns:1fr; }
+ .scene-list { grid-template-columns:1fr; }
+ .scene { display:grid; grid-template-columns:100px 1fr; gap:12px; align-items:center; }
+ .scene-art { min-height:100px; }
+ header { align-items:flex-start; }
+}
+</style>
 </head>
 <body>
-  <div class="studio">
-    <h1>🐰 AI Kids Cartoon Studio 🐻</h1>
-    <p>अपनी कहानी लिखो और कार्टून सीन बनाओ!</p>
+<header>
+  <div class="brand">✨ AI Kids <span>Cartoon Studio</span></div>
+  <div class="status">● STUDIO PREVIEW</div>
+</header>
 
-    <textarea id="story">एक खरगोश और एक भालू जंगल में दोस्त बनते हैं।</textarea>
-    <br>
-    <button onclick="makeScenes()">कार्टून सीन बनाओ</button>
-    <button onclick="readStory()">कहानी सुनो</button>
+<main>
+  <p>CREATE · IMAGINE · ANIMATE</p>
+  <h1>अपनी कहानी को कार्टून की दुनिया में बदलो</h1>
+  <p>कहानी लिखो, कैरेक्टर चुनो और अपने कार्टून सीन तैयार करो।</p>
 
-    <div id="scenes"></div>
+  <div class="layout">
+    <section class="panel">
+      <h2>🎬 कहानी बनाओ</h2>
+      <label for="story">तुम्हारी कहानी</label>
+      <textarea id="story" placeholder="जैसे: एक छोटा खरगोश जंगल में जादुई खजाना खोजने निकलता है...">एक छोटा खरगोश जंगल में एक जादुई सितारा खोजने निकलता है। रास्ते में उसे एक प्यारा भालू मिलता है। दोनों मिलकर सितारे को उसके घर वापस पहुँचाते हैं।</textarea>
+
+      <label for="character">मुख्य कैरेक्टर</label>
+      <select id="character">
+        <option value="🐰">प्यारा खरगोश</option>
+        <option value="🐻">मिलनसार भालू</option>
+        <option value="🦊">चालाक लोमड़ी</option>
+        <option value="🐼">पांडा</option>
+        <option value="🦁">नन्हा शेर</option>
+        <option value="🧙">जादुई किरदार</option>
+      </select>
+
+      <label for="style">कार्टून स्टाइल</label>
+      <select id="style">
+        <option>3D Cartoon</option>
+        <option>Fantasy Animation</option>
+        <option>Storybook</option>
+        <option>Adventure Cartoon</option>
+      </select>
+
+      <label for="duration">वीडियो की लक्षित अवधि</label>
+      <select id="duration">
+        <option value="15">15 सेकंड</option>
+        <option value="30" selected>30 सेकंड</option>
+        <option value="60">60 सेकंड</option>
+      </select>
+
+      <div class="actions">
+        <button id="generate">✨ सीन बनाओ</button>
+        <button id="reset" class="secondary">रीसेट</button>
+      </div>
+      <div class="notice">
+        <strong>AI वीडियो कनेक्शन</strong>
+        <p class="small">अभी यह स्टूडियो स्थानीय सैंपल सीन बनाता है। असली AI वीडियो के लिए बाद में API और सुरक्षित बैकएंड जोड़ा जाएगा।</p>
+      </div>
+      <p id="message" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="panel">
+      <div class="section-title">
+        <h2>🌈 तुम्हारा कार्टून स्टूडियो</h2>
+        <span class="small" id="sceneCount">3 सीन</span>
+      </div>
+
+      <div class="preview">
+        <div class="preview-content">
+          <div class="character" id="hero">🐰</div>
+          <h2 id="previewTitle">जादुई जंगल का सफर</h2>
+          <p id="previewText">अपना सीन देखने के लिए नीचे किसी कार्ड पर टैप करो।</p>
+        </div>
+      </div>
+
+      <div class="section-title">
+        <h2>🎞️ सीन टाइमलाइन</h2>
+        <span class="small" id="timeLabel">00:00 / 00:30</span>
+      </div>
+      <div class="timeline"><div id="progress"></div></div>
+      <div id="scenes" class="scene-list"></div>
+
+      <div class="actions">
+        <button id="listen" class="secondary">🔊 कहानी सुनो</button>
+        <button id="stop" class="secondary">⏹ आवाज़ रोकें</button>
+        <button id="download" class="secondary">⬇️ सीन रिपोर्ट डाउनलोड</button>
+      </div>
+      <p class="small">नोट: रिपोर्ट डाउनलोड करने से वीडियो डाउनलोड नहीं होती। वीडियो तभी मिलेगी जब असली वीडियो जनरेशन सेवा कनेक्ट होगी।</p>
+    </section>
   </div>
+</main>
 
-  <script>
-    function makeScenes() {
-      const story = document.getElementById("story").value.trim();
-      const output = document.getElementById("scenes");
+<footer>AI Kids Cartoon Studio · Creative preview · API integration pending</footer>
 
-      if (!story) {
-        output.textContent = "पहले कहानी लिखो!";
-        return;
-      }
+<script>
+const $ = id => document.getElementById(id);
 
-      const sceneTexts = [
-        "🌳 सीन 1: खरगोश जंगल में खेल रहा है।",
-        "🐻 सीन 2: भालू आता है और खरगोश से दोस्ती करता है।",
-        "🌈 सीन 3: दोनों दोस्त साथ खेलते हैं और खुश होते हैं।"
-      ];
+let scenes = [];
+let selectedScene = 0;
 
-      output.innerHTML = "";
-      sceneTexts.forEach((text) => {
-        const div = document.createElement("div");
-        div.className = "scene";
-        div.textContent = text;
-        output.appendChild(div);
-      });
+function splitStory(text) {
+  const cleaned = text.trim();
+  if (!cleaned) return [];
+  const sentences = cleaned.match(/[^।.!?]+[।.!?]?/g) || [cleaned];
+  const parts = sentences.map(s => s.trim()).filter(Boolean);
+  if (parts.length <= 1 && cleaned.length > 100) {
+    const words = cleaned.split(/\s+/);
+    const chunks = [];
+    for (let i = 0; i < words.length; i += Math.ceil(words.length / 3)) {
+      chunks.push(words.slice(i, i + Math.ceil(words.length / 3)).join(" "));
     }
+    return chunks.slice(0, 3);
+  }
+  return parts.slice(0, 6);
+}
 
-    function readStory() {
-      const story = document.getElementById("story").value.trim();
-      if (!story) return;
+function buildScenes() {
+  const text = $("story").value;
+  const parts = splitStory(text);
+  if (!parts.length) {
+    $("message").textContent = "पहले कहानी लिखो, फिर सीन बनाओ।";
+    return;
+  }
 
-      if (!("speechSynthesis" in window)) {
-        alert("इस ब्राउज़र में कहानी सुनाने की सुविधा उपलब्ध नहीं है।");
-        return;
-      }
+  const hero = $("character").value;
+  const icons = [hero, "🌳", "✨", "🗺️", "🌈", "🏡"];
+  scenes = parts.map((part, index) => ({
+    title: `सीन ${index + 1}`,
+    text: part,
+    icon: icons[index % icons.length]
+  }));
+  selectedScene = 0;
+  renderScenes();
+  $("message").textContent =
+    `${scenes.length} सैंपल सीन तैयार हैं। ये टेक्स्ट और इमोजी प्रीव्यू हैं, असली AI वीडियो नहीं।`;
+}
 
-      speechSynthesis.cancel();
-      const speech = new SpeechSynthesisUtterance(story);
-      speech.lang = "hi-IN";
-      speechSynthesis.speak(speech);
-    }
-  </script>
-</body>
-</html>
+function renderScenes() {
+  $("sceneCount").textContent = `${scenes.length} सीन`;
+  $("scenes").innerHTML = "";
 
-      if (!("speechSynthesis" in window)) {
-        alert("इस ब्राउज़र में कहानी सुनाने की सुविधा उपलब्ध नहीं है।");
-        return;
-      }
+  scenes.forEach((scene, index) => {
+    const card = document.createElement("button");
+    card.type = "button";
+    card.className = "scene" + (index === selectedScene ? " active" : "");
+    card.setAttribute("aria-pressed", String(index === selectedScene));
+    card.innerHTML = `
+      <div class="scene-art">${scene.icon}</div>
+      <div><h3>${scene.title}</h3><p></p></div>
+    `;
+    card.querySelector("p").textContent = scene.text;
+    card.addEventListener("click", () => {
+      selectedScene = index;
+      showScene();
+      renderScenes();
+    });
+    $("scenes").appendChild(card);
+  });
 
-      window.speechSynthesis.cancel();
-      const speech = new SpeechSynthesisUtterance(story);
-      speech.lang = "hi-IN";
-      window.speechSynthesis.speak(speech);
-    }
-  </script>
+  showScene();
+}
+
+function showScene() {
+  const scene = scenes[selectedScene];
+  if (!scene) return;
+  $("hero").textContent = scene.icon;
+  $("previewTitle").textContent = scene.title;
+  $("previewText").textContent = scene.text;
+  const duration = Number($("duration").value);
+  const perScene = Math.max(1, Math.floor(duration / scenes.length));
+  const current = selectedScene * perScene;
+  $("timeLabel").textContent =
+    `00:${String(current).padStart(2, "0")} / 00:${String(duration).padStart(2, "0")}`;
+  $("progress").style.width =
+    `${((selectedScene + 1) / scenes.length) * 100}%`;
+}
+
+$("generate").addEventListener("click", buildScenes);
+
+$("character").addEventListener("change", () => {
+  if (scenes.length) {
+    scenes[0].icon = $("character").value;
+    renderScenes();
+  } else {
+    $("hero").textContent = $("character").value;
+  }
+});
+
+$("duration").addEventListener("change", showScene);
+
+$("listen").addEventListener("click", () => {
+  if (!("speechSynthesis" in window)) {
+    $("message").textContent = "इस ब्राउज़र में कहानी सुनाने की सुविधा उपलब्ध नहीं है।";
+    return;
+  }
+  const text = $("story").value.trim();
+  if (!text) {
+    $("message").textContent = "पहले कहानी लिखो।";
+    return;
+  }
+  speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "hi-IN";
+  utterance.rate = 0.9;
+  speechSynthesis.speak(utterance);
+  $("message").textContent = "कहानी सुनाई जा रही है।";
+});
+
+$("stop").addEventListener("click", () => {
+  if ("speechSynthesis" in window) speechSynthesis.cancel();
+  $("message").textContent = "आवाज़ रोक दी गई।";
+});
+
+$("download").addEventListener("click", () => {
+  if (!scenes.length) {
+    $("message").textContent = "पहले सीन बनाओ, फिर रिपोर्ट डाउनलोड करो।";
+    return;
+  }
+  const report = {
+    project: "AI Kids Cartoon Studio",
+    style: $("style").value,
+    character: $("character").value,
+    targetDurationSeconds: Number($("duration").value),
+    scenes: scenes.map((s, i) => ({
+      number: i + 1, title: s.title, description: s.text, previewIcon: s.icon
+    })),
+    note: "यह सीन रिपोर्ट है, वीडियो फ़ाइल नहीं।"
+  };
+  const blob = new Blob([JSON.stringify(report, null, 2)], {
+    type: "application/json"
+  });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "cartoon-scenes.json";
+  link.click();
+  URL.revokeObjectURL(url);
+  $("message").textContent = "सीन रिपोर्ट डाउनलोड शुरू हुई।";
+});
+
+$("reset").addEventListener("click", () => {
+  $("story").value = "";
+  scenes = [];
+  selectedScene = 0;
+  $("scenes").innerHTML = "";
+  $("sceneCount").textContent = "0 सीन";
+  $("hero").textContent = $("character").value;
+  $("previewTitle").textContent = "तुम्हारा नया कार्टून";
+  $("previewText").textContent = "कहानी लिखकर सीन बनाओ।";
+  $("timeLabel").textContent = "00:00 / 00:30";
+  $("progress").style.width = "0%";
+  $("message").textContent = "नई कहानी लिखने के लिए तैयार।";
+  if ("speechSynthesis" in window) speechSynthesis.cancel();
+});
+
+buildScenes();
+</script>
 </body>
 </html>
