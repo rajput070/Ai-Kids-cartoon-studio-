@@ -3,269 +3,305 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AI Kids Cartoon Studio</title>
 <style>
 :root {
-  --bg:#0b1020; --panel:#141c31; --line:#283653;
-  --text:#f5f7ff; --muted:#aab6d0;
+  --bg:#0b1020; --panel:#151e34; --line:#2c3b59;
+  --text:#f5f7ff; --muted:#b0bdd5;
   --purple:#9875ff; --cyan:#58e1e8;
 }
 * { box-sizing:border-box; }
 body {
-  margin:0; background:radial-gradient(circle at top,#1b2850,var(--bg) 55%);
-  color:var(--text); font-family:system-ui,Arial,sans-serif;
+  margin:0; color:var(--text); font-family:system-ui,Arial,sans-serif;
+  background:radial-gradient(ellipse at top,#243766,var(--bg) 65%);
 }
-button,textarea,input,select { font:inherit; }
-button {
-  border:0; border-radius:12px; padding:12px 16px;
-  background:linear-gradient(110deg,var(--purple),#6c8dff);
-  color:white; font-weight:700; cursor:pointer;
-}
-button.secondary { background:#263451; border:1px solid var(--line); }
-button:disabled { opacity:.5; cursor:not-allowed; }
 header {
-  padding:18px 5%; border-bottom:1px solid var(--line);
-  display:flex; justify-content:space-between; align-items:center; gap:12px;
+  padding:18px; border-bottom:1px solid var(--line);
+  display:flex; justify-content:space-between; align-items:center; gap:10px;
 }
-.brand { font-weight:900; font-size:20px; }
-.brand span { color:var(--cyan); }
-.status { color:var(--cyan); font-size:12px; }
-main { max-width:1250px; margin:auto; padding:24px 16px 50px; }
-h1 { font-size:clamp(27px,5vw,43px); margin:8px 0; }
-p { color:var(--muted); line-height:1.6; }
-.layout { display:grid; grid-template-columns:340px 1fr; gap:18px; margin-top:24px; }
-.panel {
-  background:rgba(20,28,49,.94); border:1px solid var(--line);
-  border-radius:20px; padding:18px; min-width:0;
+.brand {font-size:20px;font-weight:900}
+.brand span {color:var(--cyan)}
+main {max-width:1200px;margin:auto;padding:24px 15px}
+h1 {font-size:clamp(27px,5vw,42px);margin:8px 0}
+p {color:var(--muted);line-height:1.6}
+.layout {display:grid;grid-template-columns:340px 1fr;gap:18px}
+.panel {background:var(--panel);border:1px solid var(--line);
+  border-radius:18px;padding:18px;min-width:0;margin-top:18px}
+label {display:block;margin:14px 0 7px;font-weight:700}
+textarea,select,input {
+  width:100%;padding:12px;border:1px solid var(--line);
+  border-radius:10px;background:#0b1327;color:white;font:inherit
 }
-label { display:block; margin:14px 0 7px; font-weight:700; font-size:14px; }
-textarea, input, select {
-  width:100%; color:var(--text); background:#0b1327;
-  border:1px solid var(--line); border-radius:11px; padding:12px;
+textarea {height:145px;resize:vertical}
+button {
+  border:0;border-radius:11px;padding:12px 15px;
+  color:white;background:linear-gradient(110deg,var(--purple),#648bff);
+  font:inherit;font-weight:700;cursor:pointer
 }
-textarea { min-height:145px; resize:vertical; }
-.actions { display:flex; flex-wrap:wrap; gap:9px; margin-top:13px; }
-.actions button { flex:1; }
+button.secondary {background:#273653;border:1px solid var(--line)}
+.actions {display:flex;flex-wrap:wrap;gap:9px;margin-top:13px}
+.actions button {flex:1}
 .preview {
-  min-height:320px; border:1px solid var(--line); border-radius:16px;
-  overflow:hidden; position:relative; display:grid; place-items:center;
-  text-align:center; padding:24px;
-  background:
-   radial-gradient(ellipse at 50% 110%,#1f986d 0 22%,transparent 23%),
-   linear-gradient(#6cc8ef 0%,#b8e8ff 57%,#65bd7d 58%,#24734f 100%);
-  color:#142039;
+  min-height:300px;border-radius:15px;display:grid;place-items:center;
+  text-align:center;padding:20px;color:#19354a;
+  background:linear-gradient(#83d8f6 0 58%,#83c987 58% 72%,#27724d 72%);
+  position:relative;overflow:hidden
 }
 .preview:before {
-  content:""; position:absolute; width:130px; height:130px;
-  border-radius:50%; background:#fff3a1; top:24px; right:35px;
-  box-shadow:0 0 50px #fff3a177;
+  content:"";position:absolute;width:80px;height:80px;border-radius:50%;
+  background:#fff2a0;right:25px;top:20px;
+  box-shadow:0 0 35px #fff5aa
 }
-.preview-content { position:relative; z-index:1; }
-.character { font-size:clamp(80px,15vw,145px); filter:drop-shadow(0 10px 6px #163e4a55); }
-.preview h2 { margin:0; }
-.preview p { color:#20374c; font-weight:600; }
-.section-title { display:flex; justify-content:space-between; gap:10px; align-items:center; }
-.scene-list { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin-top:15px; }
+.hero {font-size:100px;filter:drop-shadow(0 10px 5px #1236)}
+.preview-content {position:relative;z-index:1}
+.preview h2 {margin:0}
+.preview p {color:#17374b;font-weight:600}
+.scene-list {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 .scene {
-  border:1px solid var(--line); border-radius:14px; padding:13px;
-  background:#0e172b; cursor:pointer; min-width:0;
+  background:#0c152a;border:1px solid var(--line);border-radius:12px;
+  padding:10px;cursor:pointer;min-width:0
 }
-.scene.active { border-color:var(--cyan); box-shadow:0 0 0 1px var(--cyan); }
-.scene-art { min-height:100px; border-radius:10px; display:grid; place-items:center;
-  font-size:47px; background:linear-gradient(#7ed5f3,#d5f3e5 65%,#69b77a 66%); }
-.scene h3 { font-size:14px; margin:12px 0 5px; }
-.scene p { font-size:12px; margin:0; }
-.small { font-size:12px; }
-.timeline { height:7px; background:#293550; border-radius:20px; overflow:hidden; margin:12px 0; }
-.timeline div { height:100%; width:0; background:var(--cyan); transition:width .2s; }
-.notice { padding:12px; border-radius:12px; background:#101a30; border:1px solid var(--line); margin-top:14px; }
-#message { white-space:pre-wrap; font-size:13px; color:var(--cyan); }
-footer { text-align:center; padding:20px; color:var(--muted); font-size:12px; }
-@media(max-width:800px) {
- .layout { grid-template-columns:1fr; }
- .scene-list { grid-template-columns:1fr; }
- .scene { display:grid; grid-template-columns:100px 1fr; gap:12px; align-items:center; }
- .scene-art { min-height:100px; }
- header { align-items:flex-start; }
+.scene.active {border-color:var(--cyan)}
+.scene-art {font-size:42px;text-align:center;padding:15px 0;
+  background:linear-gradient(#9ce3f8,#bde6bf);border-radius:8px}
+.scene h3 {font-size:14px}
+.scene p {font-size:12px;overflow-wrap:anywhere}
+.notice {border:1px solid var(--line);background:#0d172b;
+  padding:12px;border-radius:10px;margin-top:14px}
+.small {font-size:12px}
+#status {color:var(--cyan);white-space:pre-wrap}
+video {width:100%;margin-top:12px;border-radius:12px;background:#050914}
+@media(max-width:780px) {
+  .layout {grid-template-columns:1fr}
+  .scene-list {grid-template-columns:1fr}
+  .scene {display:grid;grid-template-columns:85px 1fr;gap:10px;align-items:center}
+  .scene-art {font-size:36px}
 }
 </style>
 </head>
 <body>
 <header>
   <div class="brand">✨ AI Kids <span>Cartoon Studio</span></div>
-  <div class="status">● STUDIO PREVIEW</div>
+  <span class="small">STORY • CARTOON • VIDEO</span>
 </header>
 
 <main>
-  <p>CREATE · IMAGINE · ANIMATE</p>
-  <h1>अपनी कहानी को कार्टून की दुनिया में बदलो</h1>
-  <p>कहानी लिखो, कैरेक्टर चुनो और अपने कार्टून सीन तैयार करो।</p>
+  <p>अपनी कल्पना को कार्टून की कहानी में बदलो।</p>
+  <h1>तुम्हारा AI Cartoon Studio 🎬</h1>
+  <p>कहानी लिखो, सीन बनाओ और अपना प्रीव्यू देखो।</p>
 
   <div class="layout">
     <section class="panel">
-      <h2>🎬 कहानी बनाओ</h2>
-      <label for="story">तुम्हारी कहानी</label>
-      <textarea id="story" placeholder="जैसे: एक छोटा खरगोश जंगल में जादुई खजाना खोजने निकलता है...">एक छोटा खरगोश जंगल में एक जादुई सितारा खोजने निकलता है। रास्ते में उसे एक प्यारा भालू मिलता है। दोनों मिलकर सितारे को उसके घर वापस पहुँचाते हैं।</textarea>
+      <h2>✍️ कहानी बनाओ</h2>
+      <label for="story">अपनी कहानी लिखो</label>
+      <textarea id="story">एक प्यारा खरगोश जंगल में चमकता सितारा खोजता है। रास्ते में उसे एक भालू मिलता है। दोनों मिलकर सितारे को उसके घर पहुँचाते हैं।</textarea>
 
       <label for="character">मुख्य कैरेक्टर</label>
       <select id="character">
-        <option value="🐰">प्यारा खरगोश</option>
-        <option value="🐻">मिलनसार भालू</option>
-        <option value="🦊">चालाक लोमड़ी</option>
+        <option value="🐰">खरगोश</option>
+        <option value="🐻">भालू</option>
+        <option value="🦊">लोमड़ी</option>
         <option value="🐼">पांडा</option>
-        <option value="🦁">नन्हा शेर</option>
-        <option value="🧙">जादुई किरदार</option>
       </select>
 
       <label for="style">कार्टून स्टाइल</label>
       <select id="style">
-        <option>3D Cartoon</option>
-        <option>Fantasy Animation</option>
+        <option>3D Kids Animation</option>
+        <option>Fantasy Cartoon</option>
         <option>Storybook</option>
-        <option>Adventure Cartoon</option>
       </select>
 
-      <label for="duration">वीडियो की लक्षित अवधि</label>
+      <label for="duration">लक्षित वीडियो अवधि</label>
       <select id="duration">
+        <option value="5">5 सेकंड</option>
+        <option value="10" selected>10 सेकंड</option>
         <option value="15">15 सेकंड</option>
-        <option value="30" selected>30 सेकंड</option>
-        <option value="60">60 सेकंड</option>
       </select>
 
       <div class="actions">
-        <button id="generate">✨ सीन बनाओ</button>
+        <button id="make">✨ सीन बनाओ</button>
         <button id="reset" class="secondary">रीसेट</button>
       </div>
+
       <div class="notice">
-        <strong>AI वीडियो कनेक्शन</strong>
-        <p class="small">अभी यह स्टूडियो स्थानीय सैंपल सीन बनाता है। असली AI वीडियो के लिए बाद में API और सुरक्षित बैकएंड जोड़ा जाएगा।</p>
+        <strong>🎥 AI वीडियो जनरेशन</strong>
+        <p class="small">अभी वीडियो मॉडल कनेक्ट नहीं है। नीचे का बटन सुरक्षित बैकएंड जोड़ने के बाद इस्तेमाल किया जा सकेगा।</p>
+        <button id="videoBtn" class="secondary" style="width:100%">AI वीडियो बनाएँ</button>
       </div>
-      <p id="message" role="status" aria-live="polite"></p>
+      <p id="status" role="status" aria-live="polite"></p>
     </section>
 
     <section class="panel">
-      <div class="section-title">
-        <h2>🌈 तुम्हारा कार्टून स्टूडियो</h2>
-        <span class="small" id="sceneCount">3 सीन</span>
-      </div>
-
+      <h2>🌈 कार्टून प्रीव्यू</h2>
       <div class="preview">
         <div class="preview-content">
-          <div class="character" id="hero">🐰</div>
-          <h2 id="previewTitle">जादुई जंगल का सफर</h2>
-          <p id="previewText">अपना सीन देखने के लिए नीचे किसी कार्ड पर टैप करो।</p>
+          <div class="hero" id="hero">🐰</div>
+          <h2 id="previewTitle">जादुई जंगल</h2>
+          <p id="previewText">सीन चुनकर उसका प्रीव्यू देखो।</p>
         </div>
       </div>
 
-      <div class="section-title">
-        <h2>🎞️ सीन टाइमलाइन</h2>
-        <span class="small" id="timeLabel">00:00 / 00:30</span>
-      </div>
-      <div class="timeline"><div id="progress"></div></div>
+      <h2>🎞️ तुम्हारे सीन</h2>
       <div id="scenes" class="scene-list"></div>
 
       <div class="actions">
         <button id="listen" class="secondary">🔊 कहानी सुनो</button>
-        <button id="stop" class="secondary">⏹ आवाज़ रोकें</button>
-        <button id="download" class="secondary">⬇️ सीन रिपोर्ट डाउनलोड</button>
+        <button id="stop" class="secondary">आवाज़ रोकें</button>
+        <button id="download" class="secondary">सीन रिपोर्ट डाउनलोड</button>
       </div>
-      <p class="small">नोट: रिपोर्ट डाउनलोड करने से वीडियो डाउनलोड नहीं होती। वीडियो तभी मिलेगी जब असली वीडियो जनरेशन सेवा कनेक्ट होगी।</p>
+
+      <h2>📺 तैयार वीडियो</h2>
+      <video id="player" controls playsinline hidden></video>
+      <p id="videoMessage" class="small">AI वीडियो जनरेशन कनेक्ट होने पर तैयार वीडियो यहाँ दिखाई जाएगी।</p>
     </section>
   </div>
 </main>
 
-<footer>AI Kids Cartoon Studio · Creative preview · API integration pending</footer>
-
 <script>
 const $ = id => document.getElementById(id);
-
 let scenes = [];
-let selectedScene = 0;
+let active = 0;
 
-function splitStory(text) {
-  const cleaned = text.trim();
-  if (!cleaned) return [];
-  const sentences = cleaned.match(/[^।.!?]+[।.!?]?/g) || [cleaned];
-  const parts = sentences.map(s => s.trim()).filter(Boolean);
-  if (parts.length <= 1 && cleaned.length > 100) {
-    const words = cleaned.split(/\s+/);
-    const chunks = [];
-    for (let i = 0; i < words.length; i += Math.ceil(words.length / 3)) {
-      chunks.push(words.slice(i, i + Math.ceil(words.length / 3)).join(" "));
-    }
-    return chunks.slice(0, 3);
-  }
-  return parts.slice(0, 6);
-}
-
-function buildScenes() {
-  const text = $("story").value;
-  const parts = splitStory(text);
-  if (!parts.length) {
-    $("message").textContent = "पहले कहानी लिखो, फिर सीन बनाओ।";
+function makeScenes() {
+  const story = $("story").value.trim();
+  if (!story) {
+    $("status").textContent = "पहले अपनी कहानी लिखो।";
     return;
   }
 
-  const hero = $("character").value;
-  const icons = [hero, "🌳", "✨", "🗺️", "🌈", "🏡"];
-  scenes = parts.map((part, index) => ({
-    title: `सीन ${index + 1}`,
-    text: part,
-    icon: icons[index % icons.length]
+  const parts = (story.match(/[^।.!?]+[।.!?]?/g) || [story])
+    .map(s => s.trim()).filter(Boolean).slice(0, 6);
+
+  const icons = [$("character").value, "🌳", "✨", "🗺️", "🌈", "🏡"];
+  scenes = parts.map((text, i) => ({
+    title: "सीन " + (i + 1),
+    text,
+    icon: icons[i % icons.length]
   }));
-  selectedScene = 0;
-  renderScenes();
-  $("message").textContent =
-    `${scenes.length} सैंपल सीन तैयार हैं। ये टेक्स्ट और इमोजी प्रीव्यू हैं, असली AI वीडियो नहीं।`;
+  active = 0;
+  render();
+  $("status").textContent =
+    scenes.length + " सीन तैयार हैं। ये सैंपल प्रीव्यू हैं, AI वीडियो नहीं।";
 }
 
-function renderScenes() {
-  $("sceneCount").textContent = `${scenes.length} सीन`;
-  $("scenes").innerHTML = "";
+function render() {
+  const list = $("scenes");
+  list.replaceChildren();
 
-  scenes.forEach((scene, index) => {
-    const card = document.createElement("button");
-    card.type = "button";
-    card.className = "scene" + (index === selectedScene ? " active" : "");
-    card.setAttribute("aria-pressed", String(index === selectedScene));
-    card.innerHTML = `
-      <div class="scene-art">${scene.icon}</div>
-      <div><h3>${scene.title}</h3><p></p></div>
-    `;
-    card.querySelector("p").textContent = scene.text;
+  scenes.forEach((scene, i) => {
+    const card = document.createElement("div");
+    card.className = "scene" + (i === active ? " active" : "");
+    card.tabIndex = 0;
+    card.setAttribute("role", "button");
+    card.setAttribute("aria-label", scene.title);
+
+    const art = document.createElement("div");
+    art.className = "scene-art";
+    art.textContent = scene.icon;
+
+    const title = document.createElement("h3");
+    title.textContent = scene.title;
+    const description = document.createElement("p");
+    description.textContent = scene.text;
+
+    card.append(art, title, description);
     card.addEventListener("click", () => {
-      selectedScene = index;
-      showScene();
-      renderScenes();
+      active = i;
+      render();
     });
-    $("scenes").appendChild(card);
+    card.addEventListener("keydown", e => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        active = i;
+        render();
+      }
+    });
+    list.append(card);
   });
 
-  showScene();
+  const selected = scenes[active];
+  if (selected) {
+    $("hero").textContent = selected.icon;
+    $("previewTitle").textContent = selected.title;
+    $("previewText").textContent = selected.text;
+  }
 }
 
-function showScene() {
-  const scene = scenes[selectedScene];
-  if (!scene) return;
-  $("hero").textContent = scene.icon;
-  $("previewTitle").textContent = scene.title;
-  $("previewText").textContent = scene.text;
-  const duration = Number($("duration").value);
-  const perScene = Math.max(1, Math.floor(duration / scenes.length));
-  const current = selectedScene * perScene;
-  $("timeLabel").textContent =
-    `00:${String(current).padStart(2, "0")} / 00:${String(duration).padStart(2, "0")}`;
-  $("progress").style.width =
-    `${((selectedScene + 1) / scenes.length) * 100}%`;
-}
-
-$("generate").addEventListener("click", buildScenes);
+$("make").addEventListener("click", makeScenes);
 
 $("character").addEventListener("change", () => {
-  if (scenes.length) {
-    scenes[0].icon = $("character").value;
-    renderScenes();
+  $("hero").textContent = $("character").value;
+});
+
+$("listen").addEventListener("click", () => {
+  if (!("speechSynthesis" in window)) {
+    $("status").textContent = "इस ब्राउज़र में आवाज़ की सुविधा उपलब्ध नहीं है।";
+    return;
+  }
+  const text = $("story").value.trim();
+  if (!text) {
+    $("status").textContent = "पहले कहानी लिखो।";
+    return;
+  }
+  speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = "hi-IN";
+  utterance.rate = 0.9;
+  speechSynthesis.speak(utterance);
+  $("status").textContent = "कहानी सुनाई जा रही है।";
+});
+
+$("stop").addEventListener("click", () => {
+  if ("speechSynthesis" in window) speechSynthesis.cancel();
+  $("status").textContent = "आवाज़ रोक दी गई।";
+});
+
+$("videoBtn").addEventListener("click", () => {
+  $("videoMessage").textContent =
+    "AI वीडियो सेवा अभी कनेक्ट नहीं है। पहले सुरक्षित बैकएंड और वीडियो मॉडल API सेटअप करनी होगी। अभी कोई वीडियो जनरेट नहीं हुई।";
+  $("status").textContent = "वीडियो जनरेशन सेटअप बाकी है।";
+});
+
+$("download").addEventListener("click", () => {
+  if (!scenes.length) {
+    $("status").textContent = "पहले सीन बनाओ।";
+    return;
+  }
+  const data = {
+    story: $("story").value,
+    style: $("style").value,
+    scenes
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], {
+    type: "application/json"
+  });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "cartoon-scenes.json";
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  $("status").textContent = "सीन रिपोर्ट डाउनलोड हुई। यह वीडियो फ़ाइल नहीं है।";
+});
+
+$("reset").addEventListener("click", () => {
+  $("story").value = "";
+  scenes = [];
+  active = 0;
+  $("scenes").replaceChildren();
+  $("hero").textContent = $("character").value;
+  $("previewTitle").textContent = "नई कहानी";
+  $("previewText").textContent = "कहानी लिखकर सीन बनाओ।";
+  $("status").textContent = "नई कहानी के लिए तैयार।";
+  if ("speechSynthesis" in window) speechSynthesis.cancel();
+});
+
+makeScenes();
+</script>
+</body>
+</html>
+enes();
   } else {
     $("hero").textContent = $("character").value;
   }
