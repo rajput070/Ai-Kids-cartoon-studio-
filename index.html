@@ -1,4 +1,5 @@
 
+
 <!DOCTYPE html>
 <html lang="hi">
 <head>
@@ -6,106 +7,98 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI Kids Cartoon Studio</title>
   <style>
-    * { box-sizing: border-box; }
     body {
-      margin: 0;
       font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #111827, #312e81);
-      color: white;
-      min-height: 100vh;
+      background: #eaf7ff;
+      text-align: center;
       padding: 20px;
     }
-    main { max-width: 850px; margin: auto; }
-    h1 { color: #fde68a; text-align: center; }
-    .panel {
-      background: #ffffff12;
-      border: 1px solid #ffffff30;
-      border-radius: 18px;
+    .studio {
+      max-width: 600px;
+      margin: auto;
+      background: white;
       padding: 20px;
-      margin: 18px 0;
+      border-radius: 16px;
     }
-    label { display: block; margin: 12px 0 6px; }
-    input, textarea, select, button {
-      width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      border: 0;
+    textarea {
+      width: 95%;
+      height: 100px;
+      padding: 10px;
       font-size: 16px;
     }
-    textarea { min-height: 100px; resize: vertical; }
     button {
-      background: #facc15;
-      color: #1f2937;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 12px;
+      margin: 10px 5px;
+      padding: 12px 18px;
+      border: none;
+      border-radius: 10px;
+      background: #1677ff;
+      color: white;
+      font-size: 16px;
     }
     .scene {
-      min-height: 220px;
-      border-radius: 15px;
-      background: linear-gradient(#7dd3fc, #c4b5fd);
-      display: grid;
-      place-items: center;
-      text-align: center;
-      color: #1f2937;
-      padding: 20px;
-      font-size: 20px;
+      background: #f1f8e9;
+      margin-top: 12px;
+      padding: 14px;
+      border-radius: 10px;
+      text-align: left;
     }
-    .rabbit { font-size: 76px; }
-    small { color: #d1d5db; line-height: 1.6; }
   </style>
 </head>
 <body>
-  <main>
-    <h1>🌈 AI Kids Cartoon Studio</h1>
-    <p style="text-align:center">अपनी बच्चों की कहानी और कार्टून सीन बनाओ!</p>
+  <div class="studio">
+    <h1>🐰 AI Kids Cartoon Studio 🐻</h1>
+    <p>अपनी कहानी लिखो और कार्टून सीन बनाओ!</p>
 
-    <section class="panel">
-      <h2>🎬 कहानी बनाओ</h2>
-      <label for="story">अपनी कहानी का आइडिया लिखो</label>
-      <textarea id="story" placeholder="जैसे: एक प्यारा खरगोश जंगल में दोस्त बनाता है..."></textarea>
+    <textarea id="story">एक खरगोश और एक भालू जंगल में दोस्त बनते हैं।</textarea>
+    <br>
+    <button onclick="makeScenes()">कार्टून सीन बनाओ</button>
+    <button onclick="readStory()">कहानी सुनो</button>
 
-      <label for="character">कैरेक्टर चुनो</label>
-      <select id="character">
-        <option value="🐰">खरगोश</option>
-        <option value="🐻">भालू</option>
-        <option value="🦊">लोमड़ी</option>
-        <option value="🐼">पांडा</option>
-        <option value="🐱">बिल्ली</option>
-      </select>
-
-      <button onclick="makeScene()">कार्टून सीन बनाओ</button>
-      <button onclick="speakStory()">🔊 कहानी सुनो</button>
-    </section>
-
-    <section class="panel">
-      <h2>✨ तुम्हारा सीन</h2>
-      <div class="scene">
-        <div>
-          <div class="rabbit" id="animal">🐰</div>
-          <div id="sceneText">तुम्हारी कहानी यहाँ दिखाई देगी!</div>
-        </div>
-      </div>
-      <small>
-        नोट: यह शुरुआती वेबसाइट प्रोटोटाइप है। अभी यह असली AI वीडियो नहीं बनाती।
-        आगे चलकर इसमें AI मॉडल जोड़ने की कोशिश करेंगे।
-      </small>
-    </section>
-  </main>
+    <div id="scenes"></div>
+  </div>
 
   <script>
-    function makeScene() {
+    function makeScenes() {
       const story = document.getElementById("story").value.trim();
-      const character = document.getElementById("character").value;
+      const output = document.getElementById("scenes");
 
-      document.getElementById("animal").textContent = character;
-      document.getElementById("sceneText").textContent =
-        story || "एक प्यारा कार्टून कैरेक्टर अपनी मजेदार कहानी शुरू करता है!";
+      if (!story) {
+        output.textContent = "पहले कहानी लिखो!";
+        return;
+      }
+
+      const sceneTexts = [
+        "🌳 सीन 1: खरगोश जंगल में खेल रहा है।",
+        "🐻 सीन 2: भालू आता है और खरगोश से दोस्ती करता है।",
+        "🌈 सीन 3: दोनों दोस्त साथ खेलते हैं और खुश होते हैं।"
+      ];
+
+      output.innerHTML = "";
+      sceneTexts.forEach((text) => {
+        const div = document.createElement("div");
+        div.className = "scene";
+        div.textContent = text;
+        output.appendChild(div);
+      });
     }
 
-    function speakStory() {
-      const story = document.getElementById("story").value.trim()
-        || "एक प्यारा कार्टून कैरेक्टर अपनी मजेदार कहानी शुरू करता है।";
+    function readStory() {
+      const story = document.getElementById("story").value.trim();
+      if (!story) return;
+
+      if (!("speechSynthesis" in window)) {
+        alert("इस ब्राउज़र में कहानी सुनाने की सुविधा उपलब्ध नहीं है।");
+        return;
+      }
+
+      speechSynthesis.cancel();
+      const speech = new SpeechSynthesisUtterance(story);
+      speech.lang = "hi-IN";
+      speechSynthesis.speak(speech);
+    }
+  </script>
+</body>
+</html>
 
       if (!("speechSynthesis" in window)) {
         alert("इस ब्राउज़र में कहानी सुनाने की सुविधा उपलब्ध नहीं है।");
